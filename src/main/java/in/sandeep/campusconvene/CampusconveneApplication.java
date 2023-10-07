@@ -25,7 +25,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CampusconveneApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CampusconveneApplication.class, args);
+		SpringApplication.run(
+				CampusconveneApplication.class, args);
 	}
 
 }
