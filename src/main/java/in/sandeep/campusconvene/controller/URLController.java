@@ -20,6 +20,6 @@ package in.sandeep.campusconvene.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-public interface URLController {
+interface URLController {
     public String handleURL(HttpServletRequest httpServletRequest);
 }
