@@ -29,7 +29,7 @@ public class CampusConveneSecurityConfiguration {
     /*@Bean
     SecurityFilterChain campusConveneSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
        httpSecurity.authorizeHttpRequests ()
-               .requestMatchers ("/", "/home.html").hasRole ("FACULTY");
+               .requestMatchers ("/", "/home.html").hasRole ("faculty");
         httpSecurity.csrf ().disable ();
         return httpSecurity.build ();
     }*/
