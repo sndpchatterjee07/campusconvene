@@ -16,19 +16,21 @@
  *
  */
 
-package in.sandeep.campusconvene.controller;
+package in.sandeep.campusconvene.configuration;
 
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
-@Controller
-public class LoginController implements URLController{
-    @Override
-    @RequestMapping(value = { "/", "/{x:[\\w\\-]+}", "/{x:^(?!api$).*$}/*/{y:[\\w\\-]+}","/error"})
-    public String handleURL(HttpServletRequest httpServletRequest) {
-        return "/login.html";
-    }
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+
+public class CampusConveneSecurityConfiguration {
+
+    /*@Bean
+    SecurityFilterChain campusConveneSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
+       httpSecurity.authorizeHttpRequests ()
+               .requestMatchers ("/", "/home.html").hasRole ("FACULTY");
+        httpSecurity.csrf ().disable ();
+        return httpSecurity.build ();
+    }*/
 }
-

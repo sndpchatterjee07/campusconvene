@@ -1,20 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<!--
+   ~ /*
+   ~  *     Copyright 2023-2024 Sandeep Chatterjee @ https://sandeepc.in/
+   ~  *
+   ~  * Licensed under the Apache License, Version 2.0 (the "License");
+   ~  * you may not use this file except in compliance with the License.
+   ~  * You may obtain a copy of the License at
+   ~  *
+   ~  *          http://www.apache.org/licenses/LICENSE-2.0
+   ~  *
+   ~  * Unless required by applicable law or agreed to in writing, software
+   ~  * distributed under the License is distributed on an "AS IS" BASIS,
+   ~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   ~  * See the License for the specific language governing permissions and
+   ~  * limitations under the License.
+   ~  */
+-->
+<project
+		xmlns="http://maven.apache.org/POM/4.0.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.1.4</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
+		<!-- lookup parent from repository -->
 	</parent>
-
 	<groupId>in.sandeep</groupId>
 	<artifactId>campusconvene</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>campusconvene</name>
 	<description>University Room Booking Application</description>
-
 	<!-- START PROPERTIES -->
 	<properties>
 		<java.version>17</java.version>
@@ -23,10 +41,8 @@
 		<frontend-src-dir>${project.basedir}/src/main/frontend</frontend-src-dir>
 		<frontend-maven-plugin.version>1.14.0</frontend-maven-plugin.version>
 	</properties>
-
 	<!-- START DEPENDENCIES -->
 	<dependencies>
-
 		<dependency>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 			<groupId>org.springframework.boot</groupId>
@@ -37,22 +53,18 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<version>3.1.4</version>
 		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
 		<dependency>
 			<groupId>org.yaml</groupId>
 			<artifactId>snakeyaml</artifactId>
 			<version>2.2</version>
 		</dependency>
-
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -69,15 +81,40 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-
+		<!-- Spring Security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>6.1.4</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>6.1.4</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>6.1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/io.github.mjourard/env-file-maven-plugin -->
 		<dependency>
 			<groupId>io.github.mjourard</groupId>
 			<artifactId>env-file-maven-plugin</artifactId>
 			<version>2.0</version>
 		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/com.github.eirslett/frontend-maven-plugin -->
 		<dependency>
 			<groupId>com.github.eirslett</groupId>
@@ -85,7 +122,6 @@
 			<version>1.14.0</version>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<!-- START PLUGINS -->
 		<plugins>
@@ -101,21 +137,17 @@
 					</excludes>
 				</configuration>
 			</plugin>
-
-
 			<!-- frontend-maven-plugin -->
 			<plugin>
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
 				<version>${frontend-maven-plugin.version}</version>
-
 				<configuration>
 					<nodeVersion>${node.version}</nodeVersion>
 					<yarnVersion>${yarn.version}</yarnVersion>
 					<workingDirectory>${frontend-src-dir}</workingDirectory>
 					<installDirectory>${project.build.directory}</installDirectory>
 				</configuration>
-
 				<executions>
 					<execution>
 						<id>install-frontend-tools</id>
@@ -123,7 +155,6 @@
 							<goal>install-node-and-yarn</goal>
 						</goals>
 					</execution>
-
 					<execution>
 						<id>yarn-install</id>
 						<goals>
@@ -133,7 +164,6 @@
 							<arguments>install</arguments>
 						</configuration>
 					</execution>
-
 					<execution>
 						<id>build-frontend</id>
 						<goals>
@@ -146,8 +176,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-
 			<!-- Apache Maven Resources Plugin -->
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
