@@ -46,15 +46,6 @@ public class MongoDBClientConfiguration extends AbstractMongoClientConfiguration
     @Override
     @Nonnull
     protected String getDatabaseName() {
-
-        System.out.println("------------------------------------");
-        System.out.println("HOST:" + host);
-        System.out.println("PORT:" + port);
-        System.out.println("USERNAME: " + username);
-        System.out.println("DATABASE: " + database);
-        System.out.println("------------------------------------");
-
-
         return database;
     }
 }

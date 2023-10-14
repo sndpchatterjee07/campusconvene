@@ -16,18 +16,10 @@
  *
  */
 
-package in.sandeep.campusconvene.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+package in.sandeep.campusconvene.respository;
 
-@Controller
-public class LoginController implements URLController{
-    @Override
-    @RequestMapping(value = { "/", "/{x:[\\w\\-]+}", "/{x:^(?!api$).*$}/*/{y:[\\w\\-]+}","/error"})
-    public String handleURL(HttpServletRequest httpServletRequest) {
-        return "/login.html";
-    }
+public class UserRepository /*implements MongoRepository<Users, String >*/ {
+
+
 }
-
