@@ -16,12 +16,12 @@
   ~  */
   -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Campus Convene :: 404</title>
+    <title>Campus Convene : 404</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="assets/campusconvene.ico" />
+    <link rel="icon" type="image/png" th:href="@{/assets/campusconvene.ico}"/>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
@@ -93,13 +93,13 @@
     <div class="container">
         <div class="grid-row">
             <div class="colmun colmun-left">
-                <img src="assets/image-left.png" alt="image-left">
+                <img src="../static/assets/image-left.png" alt="image-left">
                 <h1 class="px-spc-b-20">We can't find the page you are looking for.</h1>
                 <span class="px-spc-b-20">This page has been relocated or removed.</span>
                 <button class="go-home"><i class="fa fa-home"></i> <a href="login.html" >Go Home</a></button>
             </div>
             <div class="colmun colmun-right">
-                <img src="assets/right-shape.png" alt="right-shape">
+                <img src="../static/assets/right-shape.png" alt="right-shape">
             </div>
         </div>
     </div>
