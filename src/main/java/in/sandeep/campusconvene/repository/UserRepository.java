@@ -19,13 +19,15 @@
 
 package in.sandeep.campusconvene.repository;
 
+import in.sandeep.campusconvene.model.Users;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
 /**
  * The type UserRepository.
  *
  * @author sandeep
  * @version 1.0
  */
-public class UserRepository /*implements MongoRepository<Users, String >*/ {
-
+public interface UserRepository extends MongoRepository<Users, String > {
 
 }

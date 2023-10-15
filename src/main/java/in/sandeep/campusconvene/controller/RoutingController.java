@@ -69,11 +69,12 @@ public class RoutingController implements ErrorController {
         return modelAndView;
     }
 
+
     /**
      * Validate Login.
      *
-     * @param request the request
-     * @return the Home Page, if login is successful, else redirect to Login Page
+     * @param userInfo the user info
+     * @return the model and view
      */
     @RequestMapping(value = LOGIN_VALIDATOR_PATH, method = RequestMethod.POST)
     @ResponseStatus(value= HttpStatus.OK)

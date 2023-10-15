@@ -19,19 +19,54 @@
 package in.sandeep.campusconvene.configuration;
 
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
+import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
+
+import static org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter.Directive.*;
+
 /**
  * The type SecurityConfiguration.
  *
  * @author sandeep
  * @version 1.0
+ * @see @link{https://spring.io/guides/gs/securing-web/}
  */
+@Configuration
+@EnableWebSecurity
 public class SecurityConfiguration {
 
-    /*@Bean
-    SecurityFilterChain campusConveneSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
-       httpSecurity.authorizeHttpRequests ()
-               .requestMatchers ("/", "/home.html").hasRole ("faculty");
-        httpSecurity.csrf ().disable ();
+    private final ClearSiteDataHeaderWriter.Directive[] SOURCE =
+            {CACHE, COOKIES, STORAGE, EXECUTION_CONTEXTS};
+
+
+    /**
+     * Campusconvene SecurityFilterChain.
+     *
+     * @param httpSecurity the http security
+     * @return the SecurityFilterChain
+     * @throws Exception the exception
+     */
+    @Bean
+    public SecurityFilterChain campusConveneSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
+
+        httpSecurity
+                .authorizeHttpRequests ((requests) -> requests
+                        .requestMatchers ("/", "/validateLogin").permitAll ()
+                        .anyRequest ().authenticated ()
+                )
+                .formLogin ((form) -> form
+                        .loginPage ("/")
+                        .permitAll ()
+                )
+                .logout ((logout) -> logout
+                        .logoutSuccessUrl ("/")
+                        .addLogoutHandler (new HeaderWriterLogoutHandler (new ClearSiteDataHeaderWriter (SOURCE)))
+                        .permitAll ());
         return httpSecurity.build ();
-    }*/
+    }
 }
