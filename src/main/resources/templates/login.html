@@ -54,8 +54,8 @@
 
                                 <!-- DISPLAY MESSAGE IF AUTHENTICATION FAILED -->
                                 <!--<div th:if="${param.error}">Invalid username and/or password.</div>-->
-                                <form class="row g-4" th:action="@{/validateLogin}" method="post" th:object="${userInfo}">
-                                   <div class="col-12">
+                                <form th:action="@{/validateLogin}" method="post" th:object="${userInfo}" class="row g-4">
+                                <div class="col-12">
                                         <label>Username<span class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="bi bi-person-fill"></i></div>

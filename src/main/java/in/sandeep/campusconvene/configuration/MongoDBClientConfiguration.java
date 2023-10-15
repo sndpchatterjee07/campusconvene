@@ -24,6 +24,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 
+/**
+ * The type MongoDBClientConfiguration.
+ *
+ * @author sandeep
+ * @version 1.0
+ */
 @Configuration
 public class MongoDBClientConfiguration extends AbstractMongoClientConfiguration {
 

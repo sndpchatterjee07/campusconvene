@@ -18,14 +18,24 @@
 
 package in.sandeep.campusconvene;
 
-import in.sandeep.campusconvene.model.Users;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
+/**
+ * The type Campusconvene application.
+ *
+ * @author sandeep
+ * @version 1.0
+ */
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class CampusconveneApplication {
 
+	/**
+	 * The entry point of application.
+	 *
+	 * @param args the input arguments
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(
 				CampusconveneApplication.class, args);

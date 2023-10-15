@@ -19,6 +19,12 @@
 package in.sandeep.campusconvene.configuration;
 
 
+/**
+ * The type SecurityConfiguration.
+ *
+ * @author sandeep
+ * @version 1.0
+ */
 public class SecurityConfiguration {
 
     /*@Bean

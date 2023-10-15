@@ -17,8 +17,14 @@
  */
 
 
-package in.sandeep.campusconvene.respository;
+package in.sandeep.campusconvene.repository;
 
+/**
+ * The type UserRepository.
+ *
+ * @author sandeep
+ * @version 1.0
+ */
 public class UserRepository /*implements MongoRepository<Users, String >*/ {
 
 

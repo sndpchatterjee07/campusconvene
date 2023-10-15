@@ -20,42 +20,67 @@ package in.sandeep.campusconvene.controller;
 
 import in.sandeep.campusconvene.model.Users;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.io.IOException;
+
+/**
+ * The type RoutingController.
+ *
+ * @author sandeep
+ * @version 1.0
+ */
 @RestController
-public class RoutingController implements ErrorController, WebMvcConfigurer {
+public class RoutingController implements ErrorController {
 
     private static final String MAIN_APPLICATION_PATH = "/";
     private static final String LOGIN_VALIDATOR_PATH = "/validateLogin";
     private static final String ERROR_PATH = "/error";
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController(MAIN_APPLICATION_PATH)
-                .setViewName("forward:/login.html");
-        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
+    private ModelAndView modelAndView = new ModelAndView();
+
+    /**
+     * Gets Login Page.
+     *
+     * @return the Login Page
+     */
+    @RequestMapping(value = MAIN_APPLICATION_PATH, method = RequestMethod.GET)
+    public ModelAndView getLoginPage() {
+        modelAndView.setViewName("login.html");
+        return modelAndView;
     }
 
+    /**
+     * Handle Any Errors
+     *
+     * @return the Error Page
+     */
     @RequestMapping(value = ERROR_PATH)
-    public String handleError(HttpServletRequest request) {
-        Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
-        Exception exception = (Exception) request.getAttribute("javax.servlet.error.exception");
-        return String.format("<html><body><h2>Error Page</h2><div>Status code: <b>%s</b></div>" +
-                        "<div>Exception Message: <b>%s</b></div><body></html>",
-                statusCode, exception == null ? "N/A" : exception.getMessage());
+    public ModelAndView handleError() {
+        modelAndView.setViewName("error_page.html");
+        return modelAndView;
     }
 
+    /**
+     * Validate Login.
+     *
+     * @param request the request
+     * @return the Home Page, if login is successful, else redirect to Login Page
+     */
     @RequestMapping(value = LOGIN_VALIDATOR_PATH, method = RequestMethod.POST)
     @ResponseStatus(value= HttpStatus.OK)
-    public String validateLogin(HttpServletRequest request){
-        String username   = request.getParameter ("username");
-        String password = request.getParameter ("password");
-        return username + password;
+    public ModelAndView validateLogin(@ModelAttribute Users userInfo){
+        modelAndView.setViewName("welcomePage.html"); // REDIRECT TO USER HOME.
+        modelAndView.addObject ("userInfo",userInfo);
+        System.out.println ("ENTERED USERNAME => " + userInfo.getUsername ());
+        System.out.println ("ENTERED PASSWORD => " + userInfo.getPassword ());
+        return modelAndView;
     }
 }
