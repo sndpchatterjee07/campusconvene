@@ -53,7 +53,8 @@ public class RoutingController implements ErrorController {
      */
     @RequestMapping(value = MAIN_APPLICATION_PATH, method = RequestMethod.GET)
     public ModelAndView getLoginPage() {
-        modelAndView.setViewName("login.html");
+        modelAndView.setViewName("login");
+        modelAndView.addObject("userInfo",new Users ());
         return modelAndView;
     }
 
@@ -64,7 +65,7 @@ public class RoutingController implements ErrorController {
      */
     @RequestMapping(value = ERROR_PATH)
     public ModelAndView handleError() {
-        modelAndView.setViewName("error_page.html");
+        modelAndView.setViewName("error_page");
         return modelAndView;
     }
 
@@ -77,10 +78,8 @@ public class RoutingController implements ErrorController {
     @RequestMapping(value = LOGIN_VALIDATOR_PATH, method = RequestMethod.POST)
     @ResponseStatus(value= HttpStatus.OK)
     public ModelAndView validateLogin(@ModelAttribute Users userInfo){
-        modelAndView.setViewName("welcomePage.html"); // REDIRECT TO USER HOME.
+        modelAndView.setViewName("welcome_page"); // REDIRECT TO USER HOME.
         modelAndView.addObject ("userInfo",userInfo);
-        System.out.println ("ENTERED USERNAME => " + userInfo.getUsername ());
-        System.out.println ("ENTERED PASSWORD => " + userInfo.getPassword ());
         return modelAndView;
     }
 }
