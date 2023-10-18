@@ -121,12 +121,8 @@
 			<artifactId>frontend-maven-plugin</artifactId>
 			<version>1.14.0</version>
 		</dependency>
-        <!--<dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>3.12.14</version>
-        </dependency>-->
-    </dependencies>
+		<!--<dependency><groupId>org.mongodb</groupId><artifactId>mongo-java-driver</artifactId><version>3.12.14</version></dependency>-->
+	</dependencies>
 	<build>
 		<!-- START PLUGINS -->
 		<plugins>
@@ -154,31 +150,7 @@
 					<installDirectory>${project.build.directory}</installDirectory>
 				</configuration>
 				<executions>
-					<execution>
-						<id>install-frontend-tools</id>
-						<goals>
-							<goal>install-node-and-yarn</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>yarn-install</id>
-						<goals>
-							<goal>yarn</goal>
-						</goals>
-						<configuration>
-							<arguments>install</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>build-frontend</id>
-						<goals>
-							<goal>yarn</goal>
-						</goals>
-						<phase>prepare-package</phase>
-						<configuration>
-							<arguments>build</arguments>
-						</configuration>
-					</execution>
+					<!--<execution><id>install-frontend-tools</id><goals><goal>install-node-and-yarn</goal></goals></execution><execution><id>yarn-install</id><goals><goal>yarn</goal></goals><configuration><arguments>install</arguments></configuration></execution><execution><id>build-frontend</id><goals><goal>yarn</goal></goals><phase>prepare-package</phase><configuration><arguments>build</arguments></configuration></execution>-->
 				</executions>
 			</plugin>
 			<!-- Apache Maven Resources Plugin -->

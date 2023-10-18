@@ -25,6 +25,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
 
 import static org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter.Directive.*;
@@ -56,7 +57,7 @@ public class SecurityConfiguration {
 
         httpSecurity
                 .authorizeHttpRequests ((requests) -> requests
-                        .requestMatchers ("/", "/validateLogin").permitAll ()
+                        .requestMatchers ("/", "/validateLogin","/assets/**").permitAll ()
                         .anyRequest ().authenticated ()
                 )
                 .formLogin ((form) -> form
@@ -64,9 +65,11 @@ public class SecurityConfiguration {
                         .permitAll ()
                 )
                 .logout ((logout) -> logout
-                        .logoutSuccessUrl ("/")
-                        .addLogoutHandler (new HeaderWriterLogoutHandler (new ClearSiteDataHeaderWriter (SOURCE)))
-                        .permitAll ());
+                                .logoutSuccessUrl ("/")
+                                .addLogoutHandler (new HeaderWriterLogoutHandler (new ClearSiteDataHeaderWriter (SOURCE)))
+                                .addLogoutHandler (new SecurityContextLogoutHandler ())
+                                .invalidateHttpSession (true)
+                        /*.permitAll ()*/);
         return httpSecurity.build ();
     }
 }
