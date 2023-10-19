@@ -19,17 +19,14 @@
 package in.sandeep.campusconvene.controller;
 
 import in.sandeep.campusconvene.model.Users;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import in.sandeep.campusconvene.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
-import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
-import java.io.IOException;
+import java.util.List;
 
 /**
  * The type RoutingController.
@@ -44,7 +41,11 @@ public class RoutingController implements ErrorController {
     private static final String LOGIN_VALIDATOR_PATH = "/validateLogin";
     private static final String ERROR_PATH = "/error";
 
-    private ModelAndView modelAndView = new ModelAndView();
+    private final ModelAndView modelAndView = new ModelAndView ();
+
+    @Autowired
+    UserService userService;
+
 
     /**
      * Gets Login Page.
@@ -53,8 +54,8 @@ public class RoutingController implements ErrorController {
      */
     @RequestMapping(value = MAIN_APPLICATION_PATH, method = RequestMethod.GET)
     public ModelAndView getLoginPage() {
-        modelAndView.setViewName("login");
-        modelAndView.addObject("userInfo",new Users ());
+        modelAndView.setViewName ("login");
+        modelAndView.addObject ("userInfo", new Users ());
         return modelAndView;
     }
 
@@ -65,22 +66,20 @@ public class RoutingController implements ErrorController {
      */
     @RequestMapping(value = ERROR_PATH)
     public ModelAndView handleError() {
-        modelAndView.setViewName("error_page");
+        modelAndView.setViewName ("error_page");
         return modelAndView;
     }
 
 
-    /**
-     * Validate Login.
-     *
-     * @param userInfo the user info
-     * @return the model and view
-     */
     @RequestMapping(value = LOGIN_VALIDATOR_PATH, method = RequestMethod.POST)
-    @ResponseStatus(value= HttpStatus.OK)
-    public ModelAndView validateLogin(@ModelAttribute Users userInfo){
-        modelAndView.setViewName("welcome_page"); // REDIRECT TO USER HOME.
-        modelAndView.addObject ("userInfo",userInfo);
+    @ResponseStatus(value = HttpStatus.OK)
+    public ModelAndView validateLogin(@ModelAttribute Users userInfo) {
+        modelAndView.addObject ("userInfo", userInfo);
+
+
+        List<Users> usersList = userService.findByUserName (userInfo.getUsername ());
+
+        modelAndView.setViewName ("welcome_page"); // REDIRECT TO USER HOME ON SUCCESSFUL AUTHENTICATION.
         return modelAndView;
     }
 }

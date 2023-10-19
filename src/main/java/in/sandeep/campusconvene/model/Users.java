@@ -33,6 +33,7 @@ import java.util.List;
 @Document(collection = "Users")
 public final class Users {
 
+
     private ObjectId id;
 
     private String username;
@@ -73,7 +74,7 @@ public final class Users {
         /**
          * Super admin role.
          */
-        super_admin;
+        super_admin
     }
 
     private String fullName;

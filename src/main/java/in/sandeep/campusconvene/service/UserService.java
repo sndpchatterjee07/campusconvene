@@ -16,31 +16,37 @@
  *
  */
 
-
-package in.sandeep.campusconvene.repository;
+package in.sandeep.campusconvene.service;
 
 import in.sandeep.campusconvene.model.Users;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
+import in.sandeep.campusconvene.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * The type UserRepository.
- *
- * @author sandeep
- * @version 1.0
- */
-@Repository
-public interface UserRepository extends MongoRepository<Users, String> {
+@Service
+public class UserService {
+
+    @Autowired
+    UserRepository userRepository;
 
 
     /**
-     * Find list of Users by Username.
+     * Find by user name list.
      *
      * @param username the username
-     * @return the list of Users
+     * @return the list of Users.
      */
-    List<Users> findByUsername(String username);
+    public List<Users> findByUserName(String username) {
 
+        List<Users> usersList = userRepository.findByUsername(username);
+        if (CollectionUtils.isEmpty (usersList)) {
+            System.out.println ("NO USER FOUND");
+            return new ArrayList<Users> ();
+        }
+        return usersList;
+    }
 }
