@@ -19,6 +19,7 @@
 package in.sandeep.campusconvene.model;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -33,7 +34,7 @@ import java.util.List;
 @Document(collection = "Users")
 public final class Users {
 
-
+    @Id
     private ObjectId id;
 
     private String username;
@@ -42,154 +43,69 @@ public final class Users {
 
     private String password;
 
-    private enum role {
-        /**
-         * Student role.
-         */
-        student,
-        /**
-         * Faculty role.
-         */
-        faculty,
-        /**
-         * Registrar role.
-         */
-        registrar,
-        /**
-         * Dean role.
-         */
-        dean,
-        /**
-         * Deputy director role.
-         */
-        deputy_director,
-        /**
-         * Director role.
-         */
-        director,
-        /**
-         * Chairperson role.
-         */
-        chairperson,
-        /**
-         * Super admin role.
-         */
-        super_admin
-    }
+    private String role;
 
     private String fullName;
 
-    private List<String> contactInfo;
+    private String contactInfo;
 
 
     // ACCESSORS & MUTATORS.
 
 
-    /**
-     * Gets id.
-     *
-     * @return the id
-     */
     public ObjectId getId() {
         return id;
     }
 
-    /**
-     * Sets id.
-     *
-     * @param id the id
-     */
     public void setId(ObjectId id) {
         this.id = id;
     }
 
-    /**
-     * Gets username.
-     *
-     * @return the username
-     */
     public String getUsername() {
         return username;
     }
 
-    /**
-     * Sets username.
-     *
-     * @param username the username
-     */
     public void setUsername(String username) {
         this.username = username;
     }
 
-    /**
-     * Gets email.
-     *
-     * @return the email
-     */
     public String getEmail() {
         return email;
     }
 
-    /**
-     * Sets email.
-     *
-     * @param email the email
-     */
     public void setEmail(String email) {
         this.email = email;
     }
 
-    /**
-     * Gets password.
-     *
-     * @return the password
-     */
     public String getPassword() {
         return password;
     }
 
-    /**
-     * Sets password.
-     *
-     * @param password the password
-     */
     public void setPassword(String password) {
         this.password = password;
     }
 
-    /**
-     * Gets full name.
-     *
-     * @return the full name
-     */
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public String getFullName() {
         return fullName;
     }
 
-    /**
-     * Sets full name.
-     *
-     * @param fullName the full name
-     */
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
 
-    /**
-     * Gets contact info.
-     *
-     * @return the contact info
-     */
-    public List<String> getContactInfo() {
+    public String getContactInfo() {
         return contactInfo;
     }
 
-    /**
-     * Sets contact info.
-     *
-     * @param contactInfo the contact info
-     */
-    public void setContactInfo(List<String> contactInfo) {
+    public void setContactInfo(String contactInfo) {
         this.contactInfo = contactInfo;
     }
 
@@ -200,8 +116,9 @@ public final class Users {
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
                 ", fullName='" + fullName + '\'' +
-                ", contactInfo=" + contactInfo +
+                ", contactInfo='" + contactInfo + '\'' +
                 '}';
     }
 }

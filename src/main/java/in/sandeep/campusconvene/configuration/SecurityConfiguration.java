@@ -19,10 +19,15 @@
 package in.sandeep.campusconvene.configuration;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -44,6 +49,9 @@ public class SecurityConfiguration {
     private final ClearSiteDataHeaderWriter.Directive[] SOURCE =
             {CACHE, COOKIES, STORAGE, EXECUTION_CONTEXTS};
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
 
     /**
      * Campusconvene SecurityFilterChain.
@@ -57,19 +65,29 @@ public class SecurityConfiguration {
 
         httpSecurity
                 .authorizeHttpRequests ((requests) -> requests
-                        .requestMatchers ("/", "/validateLogin","/assets/**").permitAll ()
-                        .anyRequest ().authenticated ()
-                )
-                .formLogin ((form) -> form
-                        .loginPage ("/")
-                        .permitAll ()
+                        .requestMatchers ("/", "/validateLogin", "/error", "/assets/**").permitAll ()
+                        .requestMatchers ("/super_admin_home").hasRole ("super_admin").anyRequest ().authenticated ()
                 )
                 .logout ((logout) -> logout
-                                .logoutSuccessUrl ("/")
-                                .addLogoutHandler (new HeaderWriterLogoutHandler (new ClearSiteDataHeaderWriter (SOURCE)))
-                                .addLogoutHandler (new SecurityContextLogoutHandler ())
-                                .invalidateHttpSession (true)
-                        /*.permitAll ()*/);
+                        .logoutSuccessUrl ("/")
+                        .addLogoutHandler (new HeaderWriterLogoutHandler (new ClearSiteDataHeaderWriter (SOURCE)))
+                        .addLogoutHandler (new SecurityContextLogoutHandler ())
+                        .invalidateHttpSession (true)
+                        .permitAll ());
         return httpSecurity.build ();
+    }
+
+
+    /**
+     * Campusconvene AuthenticationProvider
+     *
+     * @return the AuthenticationProvider
+     */
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider ();
+        daoAuthenticationProvider.setUserDetailsService (userDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder (new BCryptPasswordEncoder ());
+        return daoAuthenticationProvider;
     }
 }

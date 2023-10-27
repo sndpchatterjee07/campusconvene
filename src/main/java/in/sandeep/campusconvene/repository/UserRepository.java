@@ -23,8 +23,6 @@ import in.sandeep.campusconvene.model.Users;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 /**
  * The type UserRepository.
  *
@@ -34,13 +32,5 @@ import java.util.List;
 @Repository
 public interface UserRepository extends MongoRepository<Users, String> {
 
-
-    /**
-     * Find list of Users by Username.
-     *
-     * @param username the username
-     * @return the list of Users
-     */
-    List<Users> findByUsername(String username);
-
+    Users findByUsername(String username);
 }

@@ -21,6 +21,14 @@ package in.sandeep.campusconvene.service;
 import in.sandeep.campusconvene.model.Users;
 import in.sandeep.campusconvene.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -28,25 +36,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
 
     /**
-     * Find by user name list.
-     *
-     * @param username the username
-     * @return the list of Users.
+     * @param username
+     * @return
+     * @throws UsernameNotFoundException
      */
-    public List<Users> findByUserName(String username) {
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        List<Users> usersList = userRepository.findByUsername(username);
-        if (CollectionUtils.isEmpty (usersList)) {
-            System.out.println ("NO USER FOUND");
-            return new ArrayList<Users> ();
+        Users users = userRepository.findByUsername (username);
+
+        if (users == null) {
+            /*System.out.println ("USER NOT FOUND...");*/
+            throw new UsernameNotFoundException ("USER NOT FOUND...");
+
         }
-        return usersList;
+        return new in.sandeep.campusconvene.repository.UserDetails (users);
     }
 }

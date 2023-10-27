@@ -19,6 +19,8 @@
 package in.sandeep.campusconvene.controller;
 
 import in.sandeep.campusconvene.model.Users;
+import in.sandeep.campusconvene.repository.UserDetails;
+import in.sandeep.campusconvene.repository.UserRepository;
 import in.sandeep.campusconvene.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -26,6 +28,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -43,9 +46,10 @@ public class RoutingController implements ErrorController {
 
     private final ModelAndView modelAndView = new ModelAndView ();
 
-    @Autowired
-    UserService userService;
+    private UserDetails userDetails;
 
+    @Autowired
+    private UserService userService;
 
     /**
      * Gets Login Page.
@@ -71,15 +75,22 @@ public class RoutingController implements ErrorController {
     }
 
 
+    /**
+     * Authenticate the User.
+     *
+     * @param userInfo the user info
+     * @return the model and view
+     */
     @RequestMapping(value = LOGIN_VALIDATOR_PATH, method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     public ModelAndView validateLogin(@ModelAttribute Users userInfo) {
         modelAndView.addObject ("userInfo", userInfo);
+        userDetails = (UserDetails) userService.loadUserByUsername (userInfo.getUsername ());
 
-
-        List<Users> usersList = userService.findByUserName (userInfo.getUsername ());
-
-        modelAndView.setViewName ("welcome_page"); // REDIRECT TO USER HOME ON SUCCESSFUL AUTHENTICATION.
+        if (userDetails == null) {
+            modelAndView.setViewName ("login");
+        }
+        modelAndView.setViewName ("super_admin_home"); // REDIRECT TO USER HOME ON SUCCESSFUL AUTHENTICATION.
         return modelAndView;
     }
 }

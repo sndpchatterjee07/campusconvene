@@ -19,6 +19,7 @@
 package in.sandeep.campusconvene;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
@@ -29,16 +30,17 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
  * @version 1.0
  */
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
+@EnableAutoConfiguration
 public class CampusconveneApplication {
 
-	/**
-	 * The entry point of application.
-	 *
-	 * @param args the input arguments
-	 */
-	public static void main(String[] args) {
-		SpringApplication.run(
-				CampusconveneApplication.class, args);
-	}
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
+    public static void main(String[] args) {
+        SpringApplication.run (
+                CampusconveneApplication.class, args);
+    }
 
 }
