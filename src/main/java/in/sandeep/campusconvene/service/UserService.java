@@ -53,9 +53,7 @@ public class UserService implements UserDetailsService {
         Users users = userRepository.findByUsername (username);
 
         if (users == null) {
-            /*System.out.println ("USER NOT FOUND...");*/
             throw new UsernameNotFoundException ("USER NOT FOUND...");
-
         }
         return new in.sandeep.campusconvene.repository.UserDetails (users);
     }

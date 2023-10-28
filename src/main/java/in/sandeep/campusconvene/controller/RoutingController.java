@@ -25,6 +25,9 @@ import in.sandeep.campusconvene.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,7 +45,7 @@ import java.util.List;
 public class RoutingController implements ErrorController {
 
     private static final String MAIN_APPLICATION_PATH = "/";
-    private static final String LOGIN_VALIDATOR_PATH = "/validateLogin";
+    private static final String AUTHENTICATE_USER = "/authenticateUser";
     private static final String ERROR_PATH = "/error";
 
     private final ModelAndView modelAndView = new ModelAndView ();
@@ -82,15 +85,17 @@ public class RoutingController implements ErrorController {
      * @param userInfo the user info
      * @return the model and view
      */
-    @RequestMapping(value = LOGIN_VALIDATOR_PATH, method = RequestMethod.POST)
+    @RequestMapping(value = AUTHENTICATE_USER, method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
-    public ModelAndView validateLogin(@ModelAttribute Users userInfo) {
+    public ModelAndView authenticateUser(@ModelAttribute Users userInfo) {
         modelAndView.addObject ("userInfo", userInfo);
         try {
             userDetails = (UserDetails) userService.loadUserByUsername (userInfo.getUsername ());
-            modelAndView.setViewName ("super_admin_home"); // REDIRECT TO USER HOME ON SUCCESSFUL AUTHENTICATION.
+            modelAndView.setViewName ("super_admin_home"); // REDIRECT TO SUPER ADMIN HOME ON SUCCESSFUL AUTHENTICATION.
         } catch (UsernameNotFoundException usernameNotFoundException) {
             modelAndView.setViewName ("login");
+            modelAndView.addObject ("error", true);
+            modelAndView.addObject ("errorMessage", "Login Failed! Invalid Username and/or Password");
         }
         return modelAndView;
     }

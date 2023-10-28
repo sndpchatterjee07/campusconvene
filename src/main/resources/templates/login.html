@@ -53,8 +53,8 @@
                         <div class="col-md-7 pe-0">
                             <div class="form-left h-100 py-5 px-5">
                                 <!-- DISPLAY MESSAGE IF AUTHENTICATION FAILED -->
-                                <!--<div th:if="${param.error}">Invalid username and/or password.</div>-->
-                                <form th:action="@{/validateLogin}" method="post" th:object="${userInfo}"
+                                <div th:if="${error}" th:text="${errorMessage}" class="text-danger"></div>
+                                <form th:action="@{/authenticateUser}" method="post" th:object="${userInfo}"
                                       class="row g-4">
                                     <div class="col-12">
                                         <label>Username <span class="text-danger">*</span>

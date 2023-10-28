@@ -65,8 +65,8 @@ public class SecurityConfiguration {
 
         httpSecurity
                 .authorizeHttpRequests ((requests) -> requests
-                        .requestMatchers ("/", "/validateLogin", "/error", "/assets/**").permitAll ()
-                        .requestMatchers ("/super_admin_home").hasRole ("super_admin").anyRequest ().authenticated ()
+                        .requestMatchers ("/", "/authenticateUser", "/error", "/assets/**").permitAll ()
+                        .requestMatchers ("/superadmin-home").hasRole ("super_admin").anyRequest ().authenticated ()
                 )
                 .logout ((logout) -> logout
                         .logoutSuccessUrl ("/")
