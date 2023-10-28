@@ -25,6 +25,7 @@ import in.sandeep.campusconvene.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -85,12 +86,12 @@ public class RoutingController implements ErrorController {
     @ResponseStatus(value = HttpStatus.OK)
     public ModelAndView validateLogin(@ModelAttribute Users userInfo) {
         modelAndView.addObject ("userInfo", userInfo);
-        userDetails = (UserDetails) userService.loadUserByUsername (userInfo.getUsername ());
-
-        if (userDetails == null) {
+        try {
+            userDetails = (UserDetails) userService.loadUserByUsername (userInfo.getUsername ());
+            modelAndView.setViewName ("super_admin_home"); // REDIRECT TO USER HOME ON SUCCESSFUL AUTHENTICATION.
+        } catch (UsernameNotFoundException usernameNotFoundException) {
             modelAndView.setViewName ("login");
         }
-        modelAndView.setViewName ("super_admin_home"); // REDIRECT TO USER HOME ON SUCCESSFUL AUTHENTICATION.
         return modelAndView;
     }
 }
