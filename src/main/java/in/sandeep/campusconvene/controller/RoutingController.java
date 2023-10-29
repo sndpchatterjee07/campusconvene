@@ -22,6 +22,9 @@ import in.sandeep.campusconvene.model.Users;
 import in.sandeep.campusconvene.repository.UserDetails;
 import in.sandeep.campusconvene.repository.UserRepository;
 import in.sandeep.campusconvene.service.UserService;
+import jakarta.annotation.Nonnull;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
@@ -31,7 +34,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -80,22 +85,29 @@ public class RoutingController implements ErrorController {
 
 
     /**
-     * Authenticate the User.
+     * Authenticate User.
      *
-     * @param userInfo the user info
+     * @param userInfo the userInfo
      * @return the model and view
      */
     @RequestMapping(value = AUTHENTICATE_USER, method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     public ModelAndView authenticateUser(@ModelAttribute Users userInfo) {
-        modelAndView.addObject ("userInfo", userInfo);
         try {
             userDetails = (UserDetails) userService.loadUserByUsername (userInfo.getUsername ());
-            modelAndView.setViewName ("super_admin_home"); // REDIRECT TO SUPER ADMIN HOME ON SUCCESSFUL AUTHENTICATION.
-        } catch (UsernameNotFoundException usernameNotFoundException) {
+            if (userDetails != null) { // AUTHENTICATION SUCCESSFUL
+                modelAndView.setViewName ("super_admin_home");
+                modelAndView.addObject ("userInfo", userInfo);
+            } else { // AUTHENTICATION FAILED
+                modelAndView.setViewName ("login");
+                modelAndView.addObject ("error", true);
+                modelAndView.addObject ("errorMessage", "Login Failed! Invalid Username and/or Password");
+            }
+        } catch (UsernameNotFoundException usernameNotFoundException) { // AUTHENTICATION FAILED
             modelAndView.setViewName ("login");
             modelAndView.addObject ("error", true);
             modelAndView.addObject ("errorMessage", "Login Failed! Invalid Username and/or Password");
+            return modelAndView;
         }
         return modelAndView;
     }

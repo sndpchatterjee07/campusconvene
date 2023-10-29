@@ -65,15 +65,17 @@ public class SecurityConfiguration {
 
         httpSecurity
                 .authorizeHttpRequests ((requests) -> requests
-                        .requestMatchers ("/", "/authenticateUser", "/error", "/assets/**").permitAll ()
-                        .requestMatchers ("/superadmin-home").hasRole ("super_admin").anyRequest ().authenticated ()
+                        .requestMatchers ("/", "/error", "/assets/**").permitAll ()
+                        .requestMatchers ("/authenticateUser").permitAll ()
+                        .requestMatchers ("/super_admin_home").hasRole ("super_admin").anyRequest ().authenticated ()
                 )
-                .logout ((logout) -> logout
+                .formLogin ().loginPage ("/").permitAll ()
+                /*.logout ((logout) -> logout
                         .logoutSuccessUrl ("/")
                         .addLogoutHandler (new HeaderWriterLogoutHandler (new ClearSiteDataHeaderWriter (SOURCE)))
                         .addLogoutHandler (new SecurityContextLogoutHandler ())
                         .invalidateHttpSession (true)
-                        .permitAll ());
+                        .permitAll ())*/;
         return httpSecurity.build ();
     }
 
